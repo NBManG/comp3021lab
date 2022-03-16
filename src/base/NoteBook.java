@@ -1,14 +1,38 @@
 package base;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NoteBook {
+public class NoteBook implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<Folder> folders;
 	
 	public NoteBook() {
 		folders = new ArrayList<Folder>();
+		
+	}
+	
+	public NoteBook(String file) {
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		try {
+			fis = new FileInputStream(file);
+			in = new ObjectInputStream(fis);
+			NoteBook n = (NoteBook)in.readObject();
+			this.folders = n.folders;
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -70,6 +94,26 @@ public class NoteBook {
 			ls.addAll(temp);
 		}
 		return ls;
+	}
+	
+	public boolean save (String file) {
+
+		FileOutputStream fos = null;
+		ObjectOutputStream out = null;
+		NoteBook nb = new NoteBook();
+		nb.folders = this.folders;
+		try {
+			fos = new FileOutputStream(file);
+			out = new ObjectOutputStream(fos);
+			
+			out.writeObject(nb);
+			out.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}		
+		return true;
 	}
 	
 }

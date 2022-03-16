@@ -5,7 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Folder implements Comparable<Folder>{
+public class Folder implements Comparable<Folder>,java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Note> notes;
 	private String name;
 	
@@ -87,8 +91,15 @@ public class Folder implements Comparable<Folder>{
 				else {
 					test = (n.contain(kwd[i-1]) || n.contain(kwd[i+1]));
 					i+=2;
+
+					while (i<kwd.length-1 && kwd[i].equals("or")) {
+						test = (test || n.contain(kwd[i+1]));
+						i+=2;						
+					}
+					
 					if (i == kwd.length-1) 
 						test = n.contain(kwd[i]);
+					
 				}
 				
 				if (!test)
