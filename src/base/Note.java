@@ -17,6 +17,7 @@ public class Note implements Comparable<Note>,java.io.Serializable{
 		date = new Date(System.currentTimeMillis());
 		
 	}
+			
 
 	@Override
 	public boolean equals(Object obj) {

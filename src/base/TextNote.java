@@ -28,6 +28,10 @@ public class TextNote extends Note{
 		
 	}
 	
+	public String getContent() {
+		return content;
+		}
+	
 	//override contains function
 	public boolean contain (String s) {
 		String lowerTitle = this.getTitle().toLowerCase();

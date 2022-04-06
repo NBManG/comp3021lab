@@ -80,7 +80,10 @@ public class Folder implements Comparable<Folder>,java.io.Serializable{
 		String[] kwd = keywords.toLowerCase().split(" ");
 				
 		for (Note n:notes) {
-	
+			if (n.contain(kwd[0]))
+				test = true;
+			else
+				test = false;
 			for (int i=1;i<kwd.length;i++) {
 				if (i == kwd.length-1)
 					test = n.contain(kwd[i]);
@@ -90,13 +93,7 @@ public class Folder implements Comparable<Folder>,java.io.Serializable{
 				
 				else {
 					test = (n.contain(kwd[i-1]) || n.contain(kwd[i+1]));
-					i+=2;
-
-					while (i<kwd.length-1 && kwd[i].equals("or")) {
-						test = (test || n.contain(kwd[i+1]));
-						i+=2;						
-					}
-					
+					i+=2;					
 					if (i == kwd.length-1) 
 						test = n.contain(kwd[i]);
 					
@@ -105,11 +102,12 @@ public class Folder implements Comparable<Folder>,java.io.Serializable{
 				if (!test)
 					break;					
 			}
-			
+
 			if (test)
 				ls.add(n);			
 		}
-		return ls;		
+		return ls;	
+				
 	}
 	
 }
